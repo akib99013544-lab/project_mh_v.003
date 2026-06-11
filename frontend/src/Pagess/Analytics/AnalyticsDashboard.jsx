@@ -1,9 +1,9 @@
 import React, { useState, useMemo, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { 
+import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
 } from "recharts";
-import { 
+import {
   Activity, Calendar, TrendingUp, CheckCircle2, ChevronRight, Info,
   Shield, Download, LayoutDashboard, History, AlertCircle, FileText, ArrowUpRight
 } from "lucide-react";
@@ -72,13 +72,13 @@ const AnalyticsDashboard = () => {
           // Fallback to localStorage if fetch fails
           const saved = localStorage.getItem('mh_assessment_history');
           if (saved) {
-            try { setHistory(JSON.parse(saved)); } catch (e) {}
+            try { setHistory(JSON.parse(saved)); } catch (e) { }
           }
         });
     } else {
       const saved = localStorage.getItem('mh_assessment_history');
       if (saved) {
-        try { setHistory(JSON.parse(saved)); } catch (e) {}
+        try { setHistory(JSON.parse(saved)); } catch (e) { }
       }
     }
   }, []);
@@ -116,7 +116,7 @@ const AnalyticsDashboard = () => {
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 pt-24 sm:pt-32 pb-16 sm:pb-20 font-sans overflow-x-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        
+
         {/* Header */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 sm:gap-8 mb-8 sm:mb-12">
           <div className="space-y-3 sm:space-y-4">
@@ -145,7 +145,7 @@ const AnalyticsDashboard = () => {
 
         {/* Analytics Section */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
-          
+
           {/* Main Chart Card */}
           <div className="lg:col-span-2 bg-white dark:bg-slate-900 rounded-[2rem] sm:rounded-[3rem] border border-slate-100 dark:border-slate-800 shadow-sm overflow-hidden flex flex-col">
             <div className="p-4 sm:p-8 border-b border-slate-50 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-0">
@@ -161,25 +161,25 @@ const AnalyticsDashboard = () => {
                 <span className="text-[9px] sm:text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest">Active Monitoring</span>
               </div>
             </div>
-            
+
             <div className="p-2 sm:p-6 h-[350px] sm:h-[500px]">
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={currentData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                   <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-                  <XAxis dataKey="date" axisLine={false} tickLine={false} tick={{fill:'#94a3b8', fontSize:10, fontWeight:800}} dy={10} minTickGap={15} />
-                  <YAxis axisLine={false} tickLine={false} tick={{fill:'#94a3b8', fontSize:10, fontWeight:800}} domain={[0, 10]} dx={-10} />
-                  <Tooltip contentStyle={{borderRadius:'16px', border:'none', boxShadow:'0 20px 50px rgba(0,0,0,0.1)', padding:'12px', fontSize:'12px'}} />
-                  <Legend verticalAlign="top" height={60} iconType="circle" wrapperStyle={{fontWeight:800, fontSize:9, textTransform:'uppercase', letterSpacing:'0.05em'}} />
+                  <XAxis dataKey="date" axisLine={false} tickLine={false} tick={{ fill: '#94a3b8', fontSize: 10, fontWeight: 800 }} dy={10} minTickGap={15} />
+                  <YAxis axisLine={false} tickLine={false} tick={{ fill: '#94a3b8', fontSize: 10, fontWeight: 800 }} domain={[0, 10]} dx={-10} />
+                  <Tooltip contentStyle={{ borderRadius: '16px', border: 'none', boxShadow: '0 20px 50px rgba(0,0,0,0.1)', padding: '12px', fontSize: '12px' }} />
+                  <Legend verticalAlign="top" height={60} iconType="circle" wrapperStyle={{ fontWeight: 800, fontSize: 9, textTransform: 'uppercase', letterSpacing: '0.05em' }} />
                   {activeMetrics.map(m => (
-                    <Line 
-                      key={m.key} 
-                      type="monotone" 
-                      dataKey={m.key} 
-                      name={m.label} 
-                      stroke={m.color} 
-                      strokeWidth={3} 
+                    <Line
+                      key={m.key}
+                      type="monotone"
+                      dataKey={m.key}
+                      name={m.label}
+                      stroke={m.color}
+                      strokeWidth={3}
                       dot={false}
-                      activeDot={{r:6, strokeWidth:0}} 
+                      activeDot={{ r: 6, strokeWidth: 0 }}
                       animationDuration={1500}
                     />
                   ))}
@@ -218,49 +218,49 @@ const AnalyticsDashboard = () => {
 
             {/* Validated Entries */}
             <div className="bg-white dark:bg-slate-900 rounded-[2rem] sm:rounded-[3rem] border border-slate-100 dark:border-slate-800 p-8 sm:p-10 shadow-sm">
-               <h3 className="text-slate-900 dark:text-white font-black text-xs sm:text-sm uppercase tracking-widest mb-6 sm:mb-10 flex items-center gap-3">
-                 <LayoutDashboard size={18} className="text-primary sm:w-5 sm:h-5" />
-                 Validated Entries
-               </h3>
-               <div className="space-y-4 sm:space-y-6">
-                 {history.slice(-4).reverse().map((h, i) => (
-                   <div key={i} className="flex items-center justify-between p-4 sm:p-6 bg-slate-50 dark:bg-slate-800 rounded-[1.25rem] sm:rounded-[1.5rem] border border-slate-100 dark:border-slate-700">
-                     <div>
-                       <p className="text-slate-900 dark:text-white font-black text-xs sm:text-sm">{h.type} Score</p>
-                       <p className="text-slate-400 dark:text-slate-500 text-[9px] sm:text-[10px] font-bold">{new Date(h.date).toLocaleDateString()}</p>
-                     </div>
-                     <span className="font-black text-primary text-base sm:text-lg">{h.score}</span>
-                   </div>
-                 ))}
-                 {history.length === 0 && <p className="text-slate-400 dark:text-slate-500 text-xs italic text-center">No history found.</p>}
-               </div>
+              <h3 className="text-slate-900 dark:text-white font-black text-xs sm:text-sm uppercase tracking-widest mb-6 sm:mb-10 flex items-center gap-3">
+                <LayoutDashboard size={18} className="text-primary sm:w-5 sm:h-5" />
+                Validated Entries
+              </h3>
+              <div className="space-y-4 sm:space-y-6">
+                {history.slice(-4).reverse().map((h, i) => (
+                  <div key={i} className="flex items-center justify-between p-4 sm:p-6 bg-slate-50 dark:bg-slate-800 rounded-[1.25rem] sm:rounded-[1.5rem] border border-slate-100 dark:border-slate-700">
+                    <div>
+                      <p className="text-slate-900 dark:text-white font-black text-xs sm:text-sm">{h.type} Score</p>
+                      <p className="text-slate-400 dark:text-slate-500 text-[9px] sm:text-[10px] font-bold">{new Date(h.date).toLocaleDateString()}</p>
+                    </div>
+                    <span className="font-black text-primary text-base sm:text-lg">{h.score}</span>
+                  </div>
+                ))}
+                {history.length === 0 && <p className="text-slate-400 dark:text-slate-500 text-xs italic text-center">No history found.</p>}
+              </div>
             </div>
           </div>
         </div>
 
         {/* Footer Info */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 mt-6 sm:mt-0">
-           <div className="bg-slate-900 rounded-[2rem] sm:rounded-[3rem] p-8 sm:p-12 text-white shadow-2xl relative overflow-hidden group">
-              <div className="relative z-10">
-                 <h4 className="text-2xl sm:text-3xl font-black mb-4 sm:mb-6">Need a Consultation?</h4>
-                 <p className="text-slate-400 text-sm sm:text-lg mb-8 sm:mb-10">Share your progress securely with medical professionals.</p>
-                 <button className="w-full sm:w-auto px-6 sm:px-8 py-4 bg-white text-slate-900 rounded-xl sm:rounded-2xl font-black text-[10px] sm:text-xs uppercase tracking-widest flex items-center justify-center gap-2">
-                    Connect with Specialist <ArrowUpRight size={16} />
-                 </button>
-              </div>
-           </div>
+          <div className="bg-slate-900 rounded-[2rem] sm:rounded-[3rem] p-8 sm:p-12 text-white shadow-2xl relative overflow-hidden group">
+            <div className="relative z-10">
+              <h4 className="text-2xl sm:text-3xl font-black mb-4 sm:mb-6">Need a Consultation?</h4>
+              <p className="text-slate-400 text-sm sm:text-lg mb-8 sm:mb-10">Share your progress securely with medical professionals.</p>
+              <button className="w-full sm:w-auto px-6 sm:px-8 py-4 bg-white text-slate-900 rounded-xl sm:rounded-2xl font-black text-[10px] sm:text-xs uppercase tracking-widest flex items-center justify-center gap-2">
+                Connect with Specialist <ArrowUpRight size={16} />
+              </button>
+            </div>
+          </div>
 
-           <div className="bg-white dark:bg-slate-900 rounded-[2rem] sm:rounded-[3rem] border border-slate-100 dark:border-slate-800 p-8 sm:p-12 shadow-sm flex flex-col sm:flex-row items-start sm:items-center gap-6 sm:gap-10">
-              <div className="w-16 h-16 sm:w-24 sm:h-24 bg-slate-50 dark:bg-slate-800 rounded-2xl sm:rounded-[2rem] flex items-center justify-center text-slate-300 dark:text-slate-600 shrink-0 border border-slate-100 dark:border-slate-700">
-                 <Shield size={32} className="sm:w-12 sm:h-12" />
-              </div>
-              <div className="space-y-2">
-                 <h4 className="text-lg sm:text-xl font-black text-slate-900 dark:text-white leading-none">Local Data Security</h4>
-                 <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm font-medium leading-relaxed">
-                   Your mental health metrics are encrypted and stored only in your local environment.
-                 </p>
-              </div>
-           </div>
+          <div className="bg-white dark:bg-slate-900 rounded-[2rem] sm:rounded-[3rem] border border-slate-100 dark:border-slate-800 p-8 sm:p-12 shadow-sm flex flex-col sm:flex-row items-start sm:items-center gap-6 sm:gap-10">
+            <div className="w-16 h-16 sm:w-24 sm:h-24 bg-slate-50 dark:bg-slate-800 rounded-2xl sm:rounded-[2rem] flex items-center justify-center text-slate-300 dark:text-slate-600 shrink-0 border border-slate-100 dark:border-slate-700">
+              <Shield size={32} className="sm:w-12 sm:h-12" />
+            </div>
+            <div className="space-y-2">
+              <h4 className="text-lg sm:text-xl font-black text-slate-900 dark:text-white leading-none">Local Data Security</h4>
+              <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm font-medium leading-relaxed">
+                Your mental health metrics are encrypted and stored only in your local environment.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
