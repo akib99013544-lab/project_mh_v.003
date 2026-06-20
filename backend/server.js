@@ -26,20 +26,22 @@ app.get('/', (req, res) => {
 
 // Authentication Routes
 const authRoutes = require('./routes/authRoutes');
-app.use('/api/auth', authRoutes);
+app.use(['/api/auth', '/auth'], authRoutes);
 
 // Assessment Routes
 const assessmentRoutes = require('./routes/assessmentRoutes');
-app.use('/api/assessments', assessmentRoutes);
+app.use(['/api/assessments', '/assessments'], assessmentRoutes);
 
 // Referral Routes
 const referralRoutes = require('./routes/referralRoutes');
 const resourceHubRoutes = require('./routes/resourceHubRoutes');
-app.use('/api/referrals', referralRoutes);
-app.use('/api/resourcehub', resourceHubRoutes);
+app.use(['/api/referrals', '/referrals'], referralRoutes);
+app.use(['/api/resourcehub', '/resourcehub'], resourceHubRoutes);
 
 // Start Server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
+module.exports = app;
