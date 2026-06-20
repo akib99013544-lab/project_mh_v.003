@@ -9,6 +9,8 @@ import html2pdf from "html2pdf.js";
 import anxietyImg from "../../assets/marek-studzinski-7QusMpfuKIc-unsplash.jpg";
 import depressionImg from "../../assets/markus-spiske-wSJ2mM25F8Y-unsplash.jpg";
 
+const API_URL = import.meta.env.VITE_API_URL || (window.location.hostname === 'localhost' ? 'http://localhost:5000' : '');
+
 /* ─────────────────────────────────────────────
    DATA
 ───────────────────────────────────────────── */
@@ -770,7 +772,7 @@ const SelfAssessment = () => {
       const token = localStorage.getItem("token");
       const resultObj = getResult(testType, sum);
       if (token) {
-        fetch("http://localhost:5000/api/assessments", {
+        fetch(`${API_URL}/api/assessments`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

@@ -9,6 +9,8 @@ import {
 const inputCls = "p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:border-primary transition-all w-full";
 const selectCls = inputCls;
 
+const API_URL = import.meta.env.VITE_API_URL || (window.location.hostname === 'localhost' ? 'http://localhost:5000' : '');
+
 const SelfReferralForm = () => {
   const [formData, setFormData] = useState({});
   const [submitStatus, setSubmitStatus] = useState(null);
@@ -80,7 +82,7 @@ const SelfReferralForm = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/referrals`,
+        `${API_URL}/api/referrals`,
         {
           method: "POST",
           headers: {

@@ -8,6 +8,8 @@ import {
   Shield, Download, LayoutDashboard, History, AlertCircle, FileText, ArrowUpRight
 } from "lucide-react";
 
+const API_URL = import.meta.env.VITE_API_URL || (window.location.hostname === 'localhost' ? 'http://localhost:5000' : '');
+
 // --- Helper to merge history with mock baseline ---
 const getMergedData = (history = []) => {
   const merged = [];
@@ -53,7 +55,7 @@ const AnalyticsDashboard = () => {
     const token = localStorage.getItem('token');
     if (token) {
       // Fetch from backend
-      fetch('http://localhost:5000/api/assessments', {
+      fetch(`${API_URL}/api/assessments`, {
         headers: { Authorization: `Bearer ${token}` },
       })
         .then(res => res.json())

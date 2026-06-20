@@ -13,16 +13,16 @@ import researchTeamImg from "../../assets/research_team.png";
 
 const researchers = [
   {
-    name: "Dr. Sarah Johnson",
-    role: "Lead Clinical Researcher",
-    specialization: "Geriatric Psychiatry",
+    name: "Prof. Dr. Khoka Hamiduzzaman",
+    role: "Chief Medical Research Director",
+    specialization: "Gerontological Social Work & Mental Health",
     isLead: true,
-    bio: "With over 20 years of experience, Dr. Johnson leads our clinical trials focusing on early detection of age-related emotional challenges. Her pioneering work in senior mental wellness has been recognised internationally by the Global Health Institute.",
+    bio: "Professor of Social Work and Lead Clinical Researcher. Prof. Dr. Hamiduzzaman leads our international clinical studies on senior mental wellness, age-related emotional challenges, and digital health interventions.",
     image: researchTeamImg,
     social: {
       linkedin: "#",
       twitter: "#",
-      mail: "mailto:sarah.j@geronessence.com",
+      mail: "mailto:k.hamid@geronessence.com",
     },
   },
   {

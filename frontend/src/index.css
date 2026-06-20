@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap');
 @import "tailwindcss";
 @plugin "daisyui" {
   themes: light --default, dark;
@@ -7,16 +7,17 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --font-sans: 'Outfit', sans-serif;
-  --color-primary: #1e40af;
-  --color-secondary: #059669;
-  --color-accent: #f97316;
+  --font-sans: 'Plus Jakarta Sans', sans-serif;
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --color-primary: #1e3a8a;
+  --color-secondary: #0d9488;
+  --color-accent: #b45309;
   
   /* Calm Palette */
-  --color-calm-blue: #f0f9ff;
+  --color-calm-blue: #f8fafc;
   --color-calm-teal: #f0fdfa;
-  --color-calm-slate: #f8fafc;
-  --color-premium-gold: #d4af37;
+  --color-calm-slate: #f1f5f9;
+  --color-premium-gold: #b45309;
 }
 
 @utility glass-effect {
@@ -41,7 +42,7 @@
 }
 
 html, body {
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
   scroll-behavior: smooth;
   background-color: #ffffff;
   color: #1e293b;

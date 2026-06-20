@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+const API_URL = import.meta.env.VITE_API_URL || (window.location.hostname === 'localhost' ? 'http://localhost:5000' : '');
+
 const ResouceHub = () => {
   const navigate = useNavigate();
   const [title, setTitle] = useState('');
@@ -34,7 +36,7 @@ const ResouceHub = () => {
     if (image) formData.append('image', image);
     if (file) formData.append('file', file);
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/resourcehub`, {
+      const res = await fetch(`${API_URL}/api/resourcehub`, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${token}`,

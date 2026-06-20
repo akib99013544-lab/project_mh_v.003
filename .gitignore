@@ -1,1 +1,9 @@
+# dependencies
+node_modules/
+.vercel
+.env*
+
+# build output
+frontend/dist
+
 .vercel

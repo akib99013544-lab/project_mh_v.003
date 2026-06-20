@@ -4,6 +4,7 @@ import ProblemAwareness from '../../Components/HomePageComponents/ProblemAwarene
 import ServicesSection from '../../Components/HomePageComponents/ServicesSection';
 import HowItWorks from '../../Components/HomePageComponents/HowItWorks';
 import TrustSection from '../../Components/HomePageComponents/TrustSection';
+import ResearchTeam from '../../Components/HomePageComponents/ResearchTeam';
 import CallToAction from '../../Components/HomePageComponents/CallToAction';
 
 const HomePage = () => {
@@ -14,6 +15,7 @@ const HomePage = () => {
             <ServicesSection></ServicesSection>
             <HowItWorks></HowItWorks>
             <TrustSection></TrustSection>
+            <ResearchTeam></ResearchTeam>
             <CallToAction></CallToAction>
         </div>
     );
