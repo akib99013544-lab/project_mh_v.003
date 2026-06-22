@@ -55,16 +55,16 @@ const ProblemAwareness = () => {
       <div className="max-w-7xl mx-auto px-6 relative z-10">
 
         {/* ── Floating Questions ── */}
-        <div className="mb-24 flex flex-wrap justify-center gap-4 md:gap-6 max-w-5xl mx-auto">
+        <div className="mb-24 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 max-w-6xl mx-auto">
           {questions.map((q, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, scale: 0.8, y: 20 }}
-              whileInView={{ opacity: 1, scale: 1, y: 0 }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
               viewport={{ once: true }}
-              whileHover={{ scale: 1.05, y: -5, rotate: i % 2 === 0 ? 1 : -1 }}
-              className="px-6 py-3 md:px-8 md:py-4 bg-white/80 dark:bg-slate-800/80 backdrop-blur-md rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.2)] border border-white/60 dark:border-slate-700/60 text-slate-800 dark:text-slate-200 font-black text-sm md:text-lg tracking-tight hover:shadow-[0_20px_40px_rgba(99,102,241,0.15)] transition-all cursor-pointer"
+              whileHover={{ scale: 1.03, y: -5 }}
+              className="px-6 py-5 md:px-8 md:py-6 bg-white/80 dark:bg-slate-800/80 backdrop-blur-md rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.2)] border border-white/60 dark:border-slate-700/60 text-slate-800 dark:text-slate-200 font-black text-center text-lg md:text-xl tracking-tight hover:shadow-[0_20px_40px_rgba(99,102,241,0.15)] transition-all flex items-center justify-center cursor-pointer"
             >
               {q}
             </motion.div>
