@@ -159,6 +159,20 @@ const HeroSection = () => {
               </div>
             ))}
           </motion.div>
+
+          {/* Animated Closing Line */}
+          <motion.div
+            variants={itemVariants}
+            className="pt-6 text-center lg:text-left"
+          >
+            <motion.p 
+              animate={{ backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }}
+              transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
+              className="inline-block text-xl md:text-2xl font-black bg-gradient-to-r from-primary via-purple-500 to-primary bg-[length:200%_auto] text-transparent bg-clip-text"
+            >
+              We understand your emotional pathway
+            </motion.p>
+          </motion.div>
         </motion.div>
 
         {/* ── Right image ── */}
