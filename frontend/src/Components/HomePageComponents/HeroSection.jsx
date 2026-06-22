@@ -74,9 +74,9 @@ const HeroSection = () => {
               </span>
             </div>
 
-            <h1 className="text-6xl md:text-8xl font-black text-slate-900 dark:text-white leading-[1.05] tracking-tight font-sans">
+            <h1 className="text-5xl md:text-7xl lg:text-[5.5rem] font-black text-slate-900 dark:text-white leading-[1.05] tracking-tight font-sans">
               Evidence-based <br />
-              <span className="text-primary italic font-serif">clinical screening.</span>
+              <span className="text-primary italic font-serif">Affective Frailty Management.</span>
             </h1>
           </motion.div>
 
@@ -85,7 +85,7 @@ const HeroSection = () => {
             variants={itemVariants}
             className="text-xl md:text-2xl text-slate-500 dark:text-slate-400 max-w-xl leading-relaxed mx-auto lg:mx-0 font-medium font-sans"
           >
-            An online assessment sanctuary for older adults, using peer-reviewed GAD-7 and GDS-15 clinical standards to screen, track, and support emotional wellness.
+            An online assessment and referral platform to identify, track and support your emotional wellbeing.
           </motion.p>
 
           {/* CTA buttons */}
