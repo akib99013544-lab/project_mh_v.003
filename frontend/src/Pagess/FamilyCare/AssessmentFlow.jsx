@@ -3,6 +3,8 @@ import { ArrowLeft, ArrowRight, Loader2, AlertCircle } from 'lucide-react';
 import AssessmentResult from './AssessmentResult';
 import axios from 'axios';
 
+const API_URL = import.meta.env.VITE_API_URL || (window.location.hostname === 'localhost' || /^[0-9.]+$/.test(window.location.hostname) ? `http://${window.location.hostname}:5000` : '');
+
 const AssessmentFlow = ({ scaleType, onBack }) => {
   const [config, setConfig] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -17,7 +19,7 @@ const AssessmentFlow = ({ scaleType, onBack }) => {
   useEffect(() => {
     const fetchConfig = async () => {
       try {
-        const res = await axios.get(`http://${window.location.hostname}:5000/api/family-assessments/scales/${scaleType}`);
+        const res = await axios.get(`${API_URL}/api/family-assessments/scales/${scaleType}`);
         setConfig(res.data);
         setLoading(false);
       } catch (err) {
@@ -74,7 +76,7 @@ const AssessmentFlow = ({ scaleType, onBack }) => {
         completedBy,
         answers: finalAnswers
       };
-      const res = await axios.post(`http://${window.location.hostname}:5000/api/family-assessments`, payload);
+      const res = await axios.post(`${API_URL}/api/family-assessments`, payload);
       setResult(res.data);
     } catch (err) {
       console.error(err);

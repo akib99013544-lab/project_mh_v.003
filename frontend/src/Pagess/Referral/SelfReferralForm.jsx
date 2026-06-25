@@ -9,7 +9,7 @@ import {
 const inputCls = "p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:border-primary transition-all w-full";
 const selectCls = inputCls;
 
-const API_URL = import.meta.env.VITE_API_URL || `http://$(${window.location.hostname}):5000`;
+const API_URL = import.meta.env.VITE_API_URL || (window.location.hostname === 'localhost' || /^[0-9.]+$/.test(window.location.hostname) ? `http://${window.location.hostname}:5000` : '');
 
 const SelfReferralForm = () => {
   const [formData, setFormData] = useState({});

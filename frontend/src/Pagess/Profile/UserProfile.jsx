@@ -8,7 +8,7 @@ import {
   ArrowRight, Sparkles, Users
 } from "lucide-react";
 
-const API = import.meta.env.VITE_API_URL || `http://$(${window.location.hostname}):5000`;
+const API = import.meta.env.VITE_API_URL || (window.location.hostname === 'localhost' || /^[0-9.]+$/.test(window.location.hostname) ? `http://${window.location.hostname}:5000` : '');
 
 /* ── severity colour helper ── */
 const severityColor = (result = "") => {

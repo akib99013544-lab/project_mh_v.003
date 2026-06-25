@@ -9,7 +9,7 @@ import {
 } from "lucide-react";
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL || `http://$(${window.location.hostname}):5000`;
+const API_URL = import.meta.env.VITE_API_URL || (window.location.hostname === 'localhost' || /^[0-9.]+$/.test(window.location.hostname) ? `http://${window.location.hostname}:5000` : '');
 
 // --- Helper to merge history with mock baseline ---
 const getMergedData = (history = []) => {

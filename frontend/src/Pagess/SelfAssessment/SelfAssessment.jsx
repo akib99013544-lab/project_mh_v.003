@@ -9,7 +9,7 @@ import html2pdf from "html2pdf.js";
 import anxietyImg from "../../assets/marek-studzinski-7QusMpfuKIc-unsplash.jpg";
 import depressionImg from "../../assets/markus-spiske-wSJ2mM25F8Y-unsplash.jpg";
 
-const API_URL = import.meta.env.VITE_API_URL || `http://$(${window.location.hostname}):5000`;
+const API_URL = import.meta.env.VITE_API_URL || (window.location.hostname === 'localhost' || /^[0-9.]+$/.test(window.location.hostname) ? `http://${window.location.hostname}:5000` : '');
 
 /* ─────────────────────────────────────────────
    DATA
