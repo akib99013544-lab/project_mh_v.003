@@ -11,6 +11,7 @@ import KothaBot from "../Pagess/ChatBot/KothaBot";
 import AnalyticsDashboard from "../Pagess/Analytics/AnalyticsDashboard";
 import SelfReferralForm from "../Pagess/Referral/SelfReferralForm";
 import UserProfile from "../Pagess/Profile/UserProfile";
+import FamilyCareHome from "../Pagess/FamilyCare/FamilyCareHome";
 
 const router = createBrowserRouter([
   {
@@ -23,7 +24,7 @@ const router = createBrowserRouter([
       { path: "/login",          element: <Login /> },
       { path: "/register",       element: <Register /> },
       { path: "/selfassessment", element: <SelfAssessment /> },
-      { path: "/familycare",     element: <SelfAssessment /> },
+      { path: "/familycare",     element: <FamilyCareHome /> },
       { path: "/resource",       element: <ResouceHub /> },
       { path: "/kotha",          element: <KothaBot /> },
       { path: "/analytics",      element: <AnalyticsDashboard /> },

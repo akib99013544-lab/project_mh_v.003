@@ -32,6 +32,10 @@ app.use(['/api/auth', '/auth'], authRoutes);
 const assessmentRoutes = require('./routes/assessmentRoutes');
 app.use(['/api/assessments', '/assessments'], assessmentRoutes);
 
+// Family Assessment Routes
+const familyAssessmentRoutes = require('./routes/familyAssessmentRoutes');
+app.use('/api/family-assessments', familyAssessmentRoutes);
+
 // Referral Routes
 const referralRoutes = require('./routes/referralRoutes');
 const resourceHubRoutes = require('./routes/resourceHubRoutes');

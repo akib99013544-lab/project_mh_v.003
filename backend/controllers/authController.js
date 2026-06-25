@@ -105,10 +105,12 @@ const getUserProfile = async (req, res) => {
   try {
     const Assessment = require('../models/Assessment');
     const Referral   = require('../models/Referral');
+    const AssessmentResult = require('../models/AssessmentResult');
 
-    const [assessments, referrals] = await Promise.all([
+    const [assessments, referrals, familyAssessments] = await Promise.all([
       Assessment.find({ userId: req.user._id }).sort({ createdAt: -1 }),
       Referral.find({ submittedByEmail: req.user.email }).sort({ createdAt: -1 }),
+      AssessmentResult.find({ patientId: req.user._id }).sort({ createdAt: -1 }),
     ]);
 
     res.json({
@@ -121,13 +123,15 @@ const getUserProfile = async (req, res) => {
         createdAt:       req.user.createdAt,
       },
       assessments,
+      familyAssessments,
       referrals,
       stats: {
-        totalAssessments: assessments.length,
+        totalAssessments: assessments.length + familyAssessments.length,
         totalReferrals:   referrals.length,
-        lastActive:       assessments[0]?.createdAt || referrals[0]?.createdAt || req.user.createdAt,
+        lastActive:       assessments[0]?.createdAt || familyAssessments[0]?.createdAt || referrals[0]?.createdAt || req.user.createdAt,
         anxietyCount:     assessments.filter(a => a.assessmentType === 'Anxiety').length,
         depressionCount:  assessments.filter(a => a.assessmentType === 'Depression').length,
+        familyCount:      familyAssessments.length,
       },
     });
   } catch (error) {

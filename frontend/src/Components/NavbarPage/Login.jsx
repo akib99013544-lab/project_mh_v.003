@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router";
 
-const API_URL = import.meta.env.VITE_API_URL || (window.location.hostname === 'localhost' ? 'http://localhost:5000' : '');
+const API_URL = import.meta.env.VITE_API_URL || `http://$(${window.location.hostname}):5000`;
 
 const Login = () => {
   const [formData, setFormData] = useState({

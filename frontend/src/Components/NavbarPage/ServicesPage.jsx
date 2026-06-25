@@ -1,37 +1,45 @@
-import { ShieldCheck, XCircle, Lock, UserRound, Siren } from "lucide-react";
+import { ShieldCheck, XCircle, Lock, UserRound, Siren, FlaskConical, Users, Hospital, BarChart3, Bot } from "lucide-react";
 
 const ServicesPage = () => {
   const mainServices = [
     {
       id: 1,
       title: "Self-Assessment Tools",
-      icon: "🧪",
+      icon: <FlaskConical size={32} className="text-blue-600 dark:text-blue-400" />,
       desc: "Check your emotional well-being using simple questionnaires. Results are explained clearly in plain language.",
       features: ["GAD-7 & GDS-15 Tests", "Automatic scoring", "Monthly tracking"],
       color: "border-blue-200 dark:border-blue-800",
     },
     {
       id: 2,
-      title: "AI Chatbot (KOTHA)",
-      icon: "🤖",
-      desc: "A friendly AI companion that listens, asks gentle questions, and offers support based on Mental Health First Aid.",
-      features: ["Friendly conversation", "Emotional validation", "24/7 availability"],
-      color: "border-green-200 dark:border-green-800",
+      title: "Family Care Assessment",
+      icon: <Users size={32} className="text-purple-600 dark:text-purple-400" />,
+      desc: "Standardized tools designed to help you and your family understand emotional health and coping strategies.",
+      features: ["UCLA-3 Loneliness", "Brief COPE Inventory", "SIDAS-M Ideation"],
+      color: "border-purple-200 dark:border-purple-800",
     },
     {
       id: 3,
+      title: "Professional Referral",
+      icon: <Hospital size={32} className="text-green-600 dark:text-green-400" />,
+      desc: "For moderate to severe symptoms, we connect you with doctors or mental health providers immediately.",
+      features: ["GP referral help", "Emergency guidance", "Local resource links"],
+      color: "border-green-200 dark:border-green-800",
+    },
+    {
+      id: 4,
       title: "Symptom Tracking",
-      icon: "📊",
+      icon: <BarChart3 size={32} className="text-blue-600 dark:text-blue-400" />,
       desc: "Monitor your mood and symptoms over time to see improvement patterns and take action early.",
       features: ["History of results", "Visual progress graphs", "Reports for doctors"],
       color: "border-blue-200 dark:border-blue-800",
     },
     {
-      id: 6,
-      title: "Professional Referral",
-      icon: "🏥",
-      desc: "For moderate to severe symptoms, we connect you with doctors or mental health providers immediately.",
-      features: ["GP referral help", "Emergency guidance", "Local resource links"],
+      id: 5,
+      title: "AI Chatbot (KOTHA)",
+      icon: <Bot size={32} className="text-green-600 dark:text-green-400" />,
+      desc: "A friendly AI companion that listens, asks gentle questions, and offers support based on Mental Health First Aid.",
+      features: ["Friendly conversation", "Emotional validation", "24/7 availability"],
       color: "border-green-200 dark:border-green-800",
     },
   ];

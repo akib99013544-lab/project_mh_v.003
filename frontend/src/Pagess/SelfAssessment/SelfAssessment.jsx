@@ -9,7 +9,7 @@ import html2pdf from "html2pdf.js";
 import anxietyImg from "../../assets/marek-studzinski-7QusMpfuKIc-unsplash.jpg";
 import depressionImg from "../../assets/markus-spiske-wSJ2mM25F8Y-unsplash.jpg";
 
-const API_URL = import.meta.env.VITE_API_URL || (window.location.hostname === 'localhost' ? 'http://localhost:5000' : '');
+const API_URL = import.meta.env.VITE_API_URL || `http://$(${window.location.hostname}):5000`;
 
 /* ─────────────────────────────────────────────
    DATA
@@ -108,74 +108,29 @@ const severityLabels = ["Minimal", "Mild", "Moderate", "Severe"];
 function TestCard({ type, config, onStart }) {
   const Icon = config.icon;
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 32 }}
-      animate={{ opacity: 1, y: 0 }}
-      whileHover={{ y: -6 }}
-      transition={{ duration: 0.5 }}
-      onClick={() => onStart(type)}
-      className="group relative bg-white dark:bg-slate-900 rounded-3xl overflow-hidden border border-slate-100 dark:border-slate-800
-                 shadow-[0_4px_32px_rgba(0,0,0,0.06)] hover:shadow-[0_20px_60px_rgba(0,0,0,0.10)]
-                 cursor-pointer transition-all duration-500 flex flex-col"
-    >
-      {/* Image */}
-      <div className="relative h-52 overflow-hidden">
-        <img
-          src={config.img}
-          alt={config.title}
-          className="w-full h-full object-cover scale-105 group-hover:scale-110 transition-transform duration-700"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/70 via-slate-900/20 to-transparent" />
-
-        {/* Top badges */}
-        <div className="absolute top-4 left-4 flex items-center gap-2">
-          <span className="inline-flex items-center gap-1.5 bg-white/15 backdrop-blur-md
-                           border border-white/20 text-white text-[10px] font-black
-                           uppercase tracking-widest px-3 py-1.5 rounded-full">
-            <Shield size={9} /> Clinical
-          </span>
-        </div>
-        <div className="absolute top-4 right-4 flex items-center gap-1.5 bg-white/15 backdrop-blur-md
-                        border border-white/20 text-white text-[10px] font-black
-                        uppercase tracking-widest px-3 py-1.5 rounded-full">
-          <Clock size={9} /> {config.duration}
-        </div>
-
-        {/* Bottom title overlay */}
-        <div className="absolute bottom-4 left-5 right-5">
-          <p className="text-white/70 text-[10px] font-black uppercase tracking-widest mb-1">
-            {config.subtitle}
-          </p>
-          <h3 className="text-white text-2xl font-black tracking-tight">{config.title}</h3>
-        </div>
+    <div className="bg-white p-8 rounded-xl shadow-sm border border-slate-200 flex flex-col h-full hover:shadow-md transition-shadow">
+      <div className="w-16 h-16 rounded-full bg-slate-50 flex items-center justify-center mb-6 border border-slate-100">
+        <Icon size={32} className={config.accentClass} />
       </div>
+      
+      <h3 className="text-2xl font-serif font-extrabold text-slate-900 mb-3">
+        {config.title}
+      </h3>
+      
+      <p className="text-slate-600 text-lg font-medium leading-relaxed flex-grow mb-8">
+        {config.desc}
+      </p>
 
-      {/* Content */}
-      <div className="p-6 flex flex-col flex-1">
-        <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed flex-1 mb-6">{config.desc}</p>
-
-        {/* Question count pill */}
-        <div className="flex items-center gap-3 mb-6">
-          <div className={`w-9 h-9 rounded-xl ${config.bgClass} flex items-center justify-center`}>
-            <Icon size={16} className={config.accentClass} />
-          </div>
-          <span className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">
-            {config.questions.length} Questions
-          </span>
-        </div>
-
-        {/* CTA */}
+      <div className="flex items-center justify-between border-t border-slate-100 pt-6 mt-auto">
+        <span className="text-sm font-bold text-slate-400 uppercase tracking-wide">{config.duration}</span>
         <button
-          className={`w-full py-3.5 rounded-2xl font-black text-sm text-white
-                      bg-gradient-to-r ${config.gradientFrom} ${config.gradientTo}
-                      flex items-center justify-center gap-2
-                      shadow-lg hover:shadow-xl hover:opacity-90 transition-all duration-300`}
+          onClick={() => onStart(type)}
+          className="inline-flex items-center gap-2 text-primary hover:text-indigo-700 font-bold text-lg transition-colors"
         >
-          Begin Assessment
-          <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+          Start <ArrowRight size={20} />
         </button>
       </div>
-    </motion.div>
+    </div>
   );
 }
 
@@ -817,10 +772,14 @@ const SelfAssessment = () => {
   const result = stage === "result" && testType ? getResult(testType, totalScore) : null;
 
   return (
-    <div className="min-h-screen bg-[#f8fafc] dark:bg-slate-950 pt-24 pb-16 px-4 relative overflow-x-hidden">
+    <div className={`min-h-screen ${stage === 'entry' ? 'bg-[#FDFBF7]' : 'bg-[#f8fafc] dark:bg-slate-950'} pt-24 pb-16 px-4 relative overflow-x-hidden`}>
       {/* Background blobs */}
-      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary/4 rounded-full blur-[120px] pointer-events-none -translate-y-1/2 translate-x-1/3" />
-      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-secondary/4 rounded-full blur-[100px] pointer-events-none translate-y-1/3 -translate-x-1/3" />
+      {stage !== 'entry' && (
+        <>
+          <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary/4 rounded-full blur-[120px] pointer-events-none -translate-y-1/2 translate-x-1/3" />
+          <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-secondary/4 rounded-full blur-[100px] pointer-events-none translate-y-1/3 -translate-x-1/3" />
+        </>
+      )}
 
       <div className="max-w-5xl mx-auto relative z-10">
         <AnimatePresence mode="wait">
@@ -833,43 +792,23 @@ const SelfAssessment = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -16 }}
               transition={{ duration: 0.4 }}
+              className="py-6 px-6"
             >
-              {/* Page header */}
-              <div className="text-center mb-14">
-                <span className="inline-flex items-center gap-2 py-2 px-4 rounded-full
-                                 bg-primary/8 text-primary font-black text-[11px]
-                                 tracking-[0.2em] uppercase mb-5 border border-primary/12">
-                  <Sparkles size={11} /> Mental Wellness Check
-                </span>
-                <h1 className="text-4xl md:text-6xl font-black text-slate-900 dark:text-white tracking-tight leading-[1.1] mb-5">
-                  Clinical{" "}
-                  <span className="italic font-serif text-primary">Self-Assessments</span>
-                </h1>
-                <p className="text-lg text-slate-500 dark:text-slate-400 max-w-xl mx-auto leading-relaxed">
-                  Standardised psychological tools to help you monitor and understand your emotional health.
-                </p>
-              </div>
+              <div className="max-w-6xl mx-auto pt-10">
+                <div className="mb-16 text-center space-y-4">
+                  <h1 className="text-4xl md:text-5xl font-serif text-slate-900 font-extrabold tracking-tight">
+                    Clinical Self-Assessments
+                  </h1>
+                  <p className="text-xl text-slate-700 max-w-2xl mx-auto font-medium">
+                    Standardised psychological tools to help you monitor and understand your emotional health.
+                  </p>
+                </div>
 
-              {/* Trust badges */}
-              <div className="flex flex-wrap justify-center gap-4 mb-12">
-                {[
-                  { icon: Shield, text: "Clinically Validated" },
-                  { icon: Clock, text: "3–5 Minutes" },
-                  { icon: CheckCircle, text: "Private & Secure" },
-                ].map(({ icon: Icon, text }) => (
-                  <div key={text} className="inline-flex items-center gap-2 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800
-                                              rounded-full px-4 py-2 text-xs font-bold text-slate-500 dark:text-slate-400
-                                              shadow-sm">
-                    <Icon size={13} className="text-primary" /> {text}
-                  </div>
-                ))}
-              </div>
-
-              {/* Test cards */}
-              <div className="grid md:grid-cols-2 gap-6">
-                {Object.entries(testConfig).map(([type, config]) => (
-                  <TestCard key={type} type={type} config={config} onStart={handleStart} />
-                ))}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                  {Object.entries(testConfig).map(([type, config]) => (
+                    <TestCard key={type} type={type} config={config} onStart={handleStart} />
+                  ))}
+                </div>
               </div>
             </motion.div>
           )}

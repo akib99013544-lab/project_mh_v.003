@@ -5,10 +5,10 @@ import {
   User, Mail, Calendar, Home, Brain, Heart, FileText,
   TrendingUp, Clock, ChevronRight, AlertCircle, CheckCircle,
   Activity, Shield, LogOut, BarChart2, ClipboardList,
-  ArrowRight, Sparkles,
+  ArrowRight, Sparkles, Users
 } from "lucide-react";
 
-const API = import.meta.env.VITE_API_URL || (window.location.hostname === 'localhost' ? 'http://localhost:5000' : '');
+const API = import.meta.env.VITE_API_URL || `http://$(${window.location.hostname}):5000`;
 
 /* ── severity colour helper ── */
 const severityColor = (result = "") => {
@@ -122,7 +122,8 @@ export default function UserProfile() {
       </div>
     );
 
-  const { user, assessments, referrals, stats } = data;
+  const { user, assessments, familyAssessments = [], referrals, stats } = data;
+  const allAssessments = [...assessments, ...familyAssessments].sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
 
   return (
     <div className="min-h-screen bg-[#f8fafc] pt-24 pb-16 px-4 font-sans">
@@ -210,11 +211,12 @@ export default function UserProfile() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-4"
+          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4"
         >
           <StatCard icon={Activity}     label="Assessments"  value={stats.totalAssessments} color="text-primary"      bg="bg-primary/8" />
           <StatCard icon={Brain}        label="Anxiety Tests" value={stats.anxietyCount}    color="text-blue-600"     bg="bg-blue-50" />
           <StatCard icon={Heart}        label="Depression"   value={stats.depressionCount}  color="text-emerald-600"  bg="bg-emerald-50" />
+          <StatCard icon={Users}        label="Family Care"  value={stats.familyCount}      color="text-purple-600"   bg="bg-purple-50" />
           <StatCard icon={FileText}     label="Referrals"    value={stats.totalReferrals}   color="text-orange-600"   bg="bg-orange-50" />
         </motion.div>
 
@@ -226,7 +228,7 @@ export default function UserProfile() {
           className="bg-slate-100/70 rounded-2xl p-1.5 flex flex-wrap gap-1"
         >
           <Tab active={tab === "overview"}    onClick={() => setTab("overview")}    icon={BarChart2}     label="Overview" />
-          <Tab active={tab === "assessments"} onClick={() => setTab("assessments")} icon={Brain}         label="Assessments" count={assessments.length} />
+          <Tab active={tab === "assessments"} onClick={() => setTab("assessments")} icon={Brain}         label="Assessments" count={allAssessments.length} />
           <Tab active={tab === "referrals"}   onClick={() => setTab("referrals")}   icon={ClipboardList} label="Referrals"   count={referrals.length} />
         </motion.div>
 
@@ -247,11 +249,11 @@ export default function UserProfile() {
                     View all <ChevronRight size={13} />
                   </button>
                 </div>
-                {assessments.length === 0 ? (
+                {allAssessments.length === 0 ? (
                   <EmptyState icon={Brain} text="No assessments taken yet." cta="Take Assessment" to="/selfassessment" />
                 ) : (
                   <div className="divide-y divide-slate-50">
-                    {assessments.slice(0, 4).map((a) => (
+                    {allAssessments.slice(0, 4).map((a) => (
                       <AssessmentRow key={a._id} a={a} />
                     ))}
                   </div>
@@ -315,11 +317,11 @@ export default function UserProfile() {
                     <Sparkles size={12} /> New Assessment
                   </Link>
                 </div>
-                {assessments.length === 0 ? (
+                {allAssessments.length === 0 ? (
                   <EmptyState icon={Brain} text="No assessments taken yet." cta="Take Assessment" to="/selfassessment" />
                 ) : (
                   <div className="divide-y divide-slate-50">
-                    {assessments.map((a) => (
+                    {allAssessments.map((a) => (
                       <AssessmentRow key={a._id} a={a} expanded />
                     ))}
                   </div>
@@ -370,35 +372,74 @@ export default function UserProfile() {
 
 /* ── Assessment row ── */
 function AssessmentRow({ a, expanded }) {
-  const c = severityColor(a.result);
-  const maxScore = a.assessmentType === "Anxiety" ? 21 : 15;
-  const pct = Math.round((a.score / maxScore) * 100);
+  const isFamily = !!a.scaleType;
+  
+  let title = "";
+  let icon = null;
+  let bgClass = "";
+  let textClass = "";
+  let resultText = "";
+  let scoreText = "";
+  let maxScore = null;
+  
+  if (isFamily) {
+    const scale = a.scaleType.toUpperCase();
+    title = scale === 'UCLA' ? 'UCLA-3 Loneliness' : scale === 'SIDAS' ? 'SIDAS-M Risk' : 'Brief COPE';
+    resultText = a.interpretation;
+    bgClass = "bg-purple-50";
+    textClass = "text-purple-600";
+    icon = <Users size={18} className={textClass} />;
+    
+    maxScore = scale === 'UCLA' ? 9 : scale === 'SIDAS' ? 50 : null; 
+    if (typeof a.score === 'number') {
+        scoreText = maxScore ? `${a.score}/${maxScore}` : `${a.score}`;
+    } else {
+        scoreText = "View Details";
+    }
+  } else {
+    title = `${a.assessmentType} Assessment`;
+    resultText = a.result;
+    maxScore = a.assessmentType === "Anxiety" ? 21 : 15;
+    scoreText = `${a.score}/${maxScore}`;
+    bgClass = a.assessmentType === "Anxiety" ? "bg-blue-50" : "bg-emerald-50";
+    textClass = a.assessmentType === "Anxiety" ? "text-blue-600" : "text-emerald-600";
+    icon = a.assessmentType === "Anxiety" ? <Brain size={18} className={textClass} /> : <Heart size={18} className={textClass} />;
+  }
+
+  const c = severityColor(resultText);
+  let pct = 0;
+  if (typeof a.score === 'number' && maxScore) {
+      pct = Math.round((a.score / maxScore) * 100);
+  }
 
   return (
     <div className="px-7 py-5 flex flex-col sm:flex-row sm:items-center gap-4">
       {/* Icon */}
-      <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${
-        a.assessmentType === "Anxiety" ? "bg-blue-50" : "bg-emerald-50"
-      }`}>
-        {a.assessmentType === "Anxiety"
-          ? <Brain size={18} className="text-blue-600" />
-          : <Heart size={18} className="text-emerald-600" />}
+      <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${bgClass}`}>
+        {icon}
       </div>
 
       {/* Main info */}
       <div className="flex-1 min-w-0">
         <div className="flex flex-wrap items-center gap-2 mb-1">
-          <span className="font-black text-slate-900 text-sm">{a.assessmentType} Assessment</span>
+          <span className="font-black text-slate-900 text-sm">{title}</span>
           <span className={`text-[10px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full border ${c.bg} ${c.text} ${c.border}`}>
-            {a.result}
+            {resultText}
           </span>
+          {isFamily && a.completedBy && (
+            <span className="text-[9px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full bg-slate-100 text-slate-500 border border-slate-200">
+              {a.completedBy === 'self' ? 'Self' : 'Caregiver'}
+            </span>
+          )}
         </div>
         <div className="flex items-center gap-3">
           {/* Score bar */}
-          <div className="flex-1 max-w-[140px] h-1.5 bg-slate-100 rounded-full overflow-hidden">
-            <div className={`h-full rounded-full ${c.dot}`} style={{ width: `${pct}%` }} />
-          </div>
-          <span className="text-xs font-bold text-slate-500">{a.score}/{maxScore}</span>
+          {typeof a.score === 'number' && maxScore ? (
+            <div className="flex-1 max-w-[140px] h-1.5 bg-slate-100 rounded-full overflow-hidden">
+              <div className={`h-full rounded-full ${c.dot}`} style={{ width: `${pct}%` }} />
+            </div>
+          ) : null}
+          <span className="text-xs font-bold text-slate-500">{scoreText}</span>
         </div>
         {expanded && (
           <p className="text-[11px] text-slate-400 mt-1">
