@@ -23,6 +23,30 @@ const ResourceHubAssetSchema = new mongoose.Schema({
     type: String,
     default: '',
   },
+  page: {
+    type: String,
+    default: '',
+  },
+  resourceUrl: {
+    type: String,
+    default: '',
+  },
+  targetAudience: {
+    type: String,
+    default: '',
+  },
+  priorityLevel: {
+    type: String,
+    default: '',
+  },
+  status: {
+    type: String,
+    default: '',
+  },
+  supervisorComment: {
+    type: String,
+    default: '',
+  },
   uploadedBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',

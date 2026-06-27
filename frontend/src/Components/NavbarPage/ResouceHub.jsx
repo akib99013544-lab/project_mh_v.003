@@ -11,6 +11,12 @@ const ResouceHub = () => {
   const [description, setDescription] = useState('');
   const [image, setImage] = useState(null);
   const [file, setFile] = useState(null);
+  const [page, setPage] = useState('Homepage');
+  const [resourceUrl, setResourceUrl] = useState('');
+  const [targetAudience, setTargetAudience] = useState('Developer');
+  const [priorityLevel, setPriorityLevel] = useState('Low');
+  const [status, setStatus] = useState('Active');
+  const [supervisorComment, setSupervisorComment] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
 
   useEffect(() => {
@@ -33,6 +39,12 @@ const ResouceHub = () => {
     const formData = new FormData();
     formData.append('title', title);
     if (description) formData.append('description', description);
+    if (page) formData.append('page', page);
+    if (resourceUrl) formData.append('resourceUrl', resourceUrl);
+    if (targetAudience) formData.append('targetAudience', targetAudience);
+    if (priorityLevel) formData.append('priorityLevel', priorityLevel);
+    if (status) formData.append('status', status);
+    if (supervisorComment) formData.append('supervisorComment', supervisorComment);
     if (image) formData.append('image', image);
     if (file) formData.append('file', file);
     try {
@@ -57,6 +69,12 @@ const ResouceHub = () => {
         toast.success('Resource saved');
         setTitle('');
         setDescription('');
+        setPage('Homepage');
+        setResourceUrl('');
+        setTargetAudience('Developer');
+        setPriorityLevel('Low');
+        setStatus('Active');
+        setSupervisorComment('');
         setImage(null);
         setFile(null);
         setErrorMsg('');
@@ -104,7 +122,11 @@ const ResouceHub = () => {
               </div>
               <div className="space-y-2">
                 <label className="text-gray-600 dark:text-gray-300 font-semibold ml-2">Select Page</label>
-                <select className="p-4 bg-gray-50 dark:bg-slate-700 border-2 border-gray-100 dark:border-slate-600 rounded-2xl outline-none focus:border-[#4A90E2] focus:bg-white dark:focus:bg-slate-600 transition-all text-lg text-gray-500 dark:text-gray-200 w-full">
+                <select 
+                  value={page}
+                  onChange={(e) => setPage(e.target.value)}
+                  className="p-4 bg-gray-50 dark:bg-slate-700 border-2 border-gray-100 dark:border-slate-600 rounded-2xl outline-none focus:border-[#4A90E2] focus:bg-white dark:focus:bg-slate-600 transition-all text-lg text-gray-500 dark:text-gray-200 w-full"
+                >
                   <option>Homepage</option>
                   <option>About us </option>
                   <option>service </option>
@@ -112,7 +134,7 @@ const ResouceHub = () => {
                   <option>About us </option>
                   <option>Other Specifications (includes Supervisor Comments) </option>
                   
-
+                  
                   
                   <option>API Section</option>
                 </select>
@@ -169,6 +191,8 @@ const ResouceHub = () => {
               <label className="text-gray-600 dark:text-gray-300 font-semibold ml-2">Resource URL</label>
               <input
                 type="url"
+                value={resourceUrl}
+                onChange={(e) => setResourceUrl(e.target.value)}
                 placeholder="https://docs.example.com/..."
                 className="p-4 bg-gray-50 dark:bg-slate-700 border-2 border-gray-100 dark:border-slate-600 rounded-2xl outline-none focus:border-[#4A90E2] text-lg w-full dark:text-white"
               />
@@ -180,7 +204,11 @@ const ResouceHub = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="space-y-2">
                 <label className="text-sm font-bold text-gray-400 dark:text-gray-500 uppercase">Target Audience</label>
-                <select className="w-full p-3 rounded-xl border-2 border-gray-200 dark:border-slate-600 outline-none focus:border-[#4A90E2] dark:bg-slate-700 dark:text-white">
+                <select 
+                  value={targetAudience}
+                  onChange={(e) => setTargetAudience(e.target.value)}
+                  className="w-full p-3 rounded-xl border-2 border-gray-200 dark:border-slate-600 outline-none focus:border-[#4A90E2] dark:bg-slate-700 dark:text-white"
+                >
                   <option>Developer</option>
                   <option>Customer</option>
                   <option>Both</option>
@@ -188,7 +216,11 @@ const ResouceHub = () => {
               </div>
               <div className="space-y-2">
                 <label className="text-sm font-bold text-gray-400 dark:text-gray-500 uppercase">Priority Level</label>
-                <select className="w-full p-3 rounded-xl border-2 border-gray-200 dark:border-slate-600 outline-none focus:border-[#4A90E2] dark:bg-slate-700 dark:text-white">
+                <select 
+                  value={priorityLevel}
+                  onChange={(e) => setPriorityLevel(e.target.value)}
+                  className="w-full p-3 rounded-xl border-2 border-gray-200 dark:border-slate-600 outline-none focus:border-[#4A90E2] dark:bg-slate-700 dark:text-white"
+                >
                   <option>Low</option>
                   <option>Medium</option>
                   <option>High</option>
@@ -196,7 +228,11 @@ const ResouceHub = () => {
               </div>
               <div className="space-y-2">
                 <label className="text-sm font-bold text-gray-400 dark:text-gray-500 uppercase">Status</label>
-                <select className="w-full p-3 rounded-xl border-2 border-gray-200 dark:border-slate-600 outline-none focus:border-[#4A90E2] dark:bg-slate-700 dark:text-white">
+                <select 
+                  value={status}
+                  onChange={(e) => setStatus(e.target.value)}
+                  className="w-full p-3 rounded-xl border-2 border-gray-200 dark:border-slate-600 outline-none focus:border-[#4A90E2] dark:bg-slate-700 dark:text-white"
+                >
                   <option>Active</option>
                   <option>Draft</option>
                   <option>Inactive</option>
@@ -208,6 +244,8 @@ const ResouceHub = () => {
                 <label className="text-sm font-bold text-gray-400 dark:text-gray-500 uppercase">Supervisor Comment (Optional)</label>
                 <input
                   type="text"
+                  value={supervisorComment}
+                  onChange={(e) => setSupervisorComment(e.target.value)}
                   placeholder="Internal notes..."
                   className="w-full p-4 bg-white dark:bg-slate-700 border-2 border-gray-100 dark:border-slate-600 rounded-2xl outline-none focus:border-[#4A90E2] dark:text-white"
                 />

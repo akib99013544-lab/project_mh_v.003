@@ -32,8 +32,8 @@ const uploadFile = async (file, isCloudinaryConfigured) => {
 const uploadAsset = async (req, res) => {
   try {
     console.log('Upload request user:', req.user);
-    const { title, description } = req.body;
-    console.log('Upload request body:', { title, description });
+    const { title, description, page, resourceUrl, targetAudience, priorityLevel, status, supervisorComment } = req.body;
+    console.log('Upload request body:', { title, description, page, resourceUrl, targetAudience, priorityLevel, status, supervisorComment });
 
     const imageFile = req.files && req.files['image'] && req.files['image'][0];
     const attachedFile = req.files && req.files['file'] && req.files['file'][0];
@@ -81,6 +81,12 @@ const uploadAsset = async (req, res) => {
     const asset = await ResourceHubAsset.create({
       title,
       description: description || '',
+      page: page || '',
+      resourceUrl: resourceUrl || '',
+      targetAudience: targetAudience || '',
+      priorityLevel: priorityLevel || '',
+      status: status || '',
+      supervisorComment: supervisorComment || '',
       imageUrl,
       fileUrl,
       fileType,

@@ -34,7 +34,7 @@ app.use(['/api/assessments', '/assessments'], assessmentRoutes);
 
 // Family Assessment Routes
 const familyAssessmentRoutes = require('./routes/familyAssessmentRoutes');
-app.use('/api/family-assessments', familyAssessmentRoutes);
+app.use(['/api/family-assessments', '/family-assessments'], familyAssessmentRoutes);
 
 // Referral Routes
 const referralRoutes = require('./routes/referralRoutes');
